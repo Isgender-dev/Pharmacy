@@ -1,76 +1,75 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pharmacy/constants/constants.dart';
 import 'package:pharmacy/controllers/tab_index_controller.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:pharmacy/views/cart/cart_page.dart';
+import 'package:pharmacy/views/home/home_page.dart';
+import 'package:pharmacy/views/menu/menu_page.dart';
+import 'package:pharmacy/views/profile/profile_page.dart';
+
 
 class MainScreen extends StatelessWidget {
-  const MainScreen({super.key});
+  MainScreen({super.key});
+
+  List<Widget> pageList = [
+    MenuPage(),
+    HomePage(),
+    CartPage(),
+    ProfilePage()
+  ];
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(TabIndexController());
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: kPrimary,
-        title: Container(
-          height: 40,
-          decoration: BoxDecoration(
-            color: kWhite,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: '  Search for medicines',
-                hintStyle: TextStyle(color: kGray),
-                suffixIcon: Icon(Icons.search, color: kGray,),
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.symmetric(vertical: 10),
+
+    return Obx(
+      () => Scaffold(
+        body: Stack(
+          children: [
+            pageList[controller.tabIndex],
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Theme(
+                data: Theme.of(context).copyWith(canvasColor: kPrimary),
+                child: BottomNavigationBar(
+                  type: BottomNavigationBarType.fixed,
+                  showSelectedLabels: false,
+                  showUnselectedLabels: false,
+                  selectedItemColor: kSecondary,
+                  unselectedItemColor: kWhite,
+                  onTap: (value) {
+                    controller.SetTabIndex = value;
+                  },
+                  currentIndex: controller.tabIndex,
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: const Icon(AntDesign.bars),
+                      label: 'Menýu',
+                    ),
+                    const BottomNavigationBarItem(
+                      icon: Icon(AntDesign.home),
+                      label: 'Baş sahypa',
+                    ),
+                    const BottomNavigationBarItem(
+                      icon: Badge(
+                        label: Text('1'),
+                        child: Icon(AntDesign.shoppingcart),
+                      ),
+                      label: 'Sebet',
+                    ),
+                    const BottomNavigationBarItem(
+                      icon: Icon(AntDesign.user),
+                      label: 'Profil',
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
+          ],
         ),
-      ),
-      body: Stack(
-        children: [
-          Container(
-            // height: height,
-            // width: width,
-            color: kOffWhite,
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Theme(
-              data: Theme.of(context).copyWith(canvasColor: kPrimary),
-              child: BottomNavigationBar(
-                showSelectedLabels: false,
-                showUnselectedLabels: false,
-                selectedItemColor: kWhite,
-                unselectedItemColor: kDarkWhite,
-                onTap: (value) {},
-                items: const [
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.menu_outlined),
-                    label: 'Menu',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.home_outlined),
-                    label: 'Home',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.shopping_cart_outlined),
-                    label: 'Cart',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.person_outline),
-                    label: 'Profile',
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

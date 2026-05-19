@@ -4,8 +4,8 @@ import 'dart:ui';
 
 String googleApiKey = '';
 
-const kPrimary = Color(0xFFF43F5E);
-const kPrimaryLight = Color(0xFFFB7185);
+const kPrimary = Color(0xFF10B982);
+const kPrimaryLight = Color(0xFFD1FAE5);
 const kSecondary = Color(0xffffa44f);
 const kSecondaryLight = Color(0xFFffe5db);
 const kTertiary = Color(0xff0078a6);
