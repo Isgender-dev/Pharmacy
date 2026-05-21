@@ -27,6 +27,8 @@ class MainScreen extends StatelessWidget {
 
     return Obx(
       () => Scaffold(
+        drawer: const MenuPage(),
+        // endDrawer: const CartPage(),
         body: Stack(
           children: [
             pageList[controller.tabIndex],
@@ -45,14 +47,17 @@ class MainScreen extends StatelessWidget {
                   },
                   currentIndex: controller.tabIndex,
                   items: [
+                    
                     BottomNavigationBarItem(
                       icon: const Icon(AntDesign.bars),
                       label: 'Menýu',
                     ),
+
                     const BottomNavigationBarItem(
                       icon: Icon(AntDesign.home),
                       label: 'Baş sahypa',
                     ),
+                    
                     const BottomNavigationBarItem(
                       icon: Badge(
                         label: Text('1'),
@@ -60,10 +65,12 @@ class MainScreen extends StatelessWidget {
                       ),
                       label: 'Sebet',
                     ),
+
                     const BottomNavigationBarItem(
                       icon: Icon(AntDesign.user),
                       label: 'Profil',
                     ),
+
                   ],
                 ),
               ),
