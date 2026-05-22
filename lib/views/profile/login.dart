@@ -12,30 +12,17 @@ class LoginHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 70),
+          const SizedBox(height: 10),
           Text(
             "Sign in to your account",
             style: TextStyle(
               fontSize: 30,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w600,
               color: kDark,
               letterSpacing: -0.5,
             ),
           ),
-          Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Text("Don't have an account?", style: TextStyle(color: kGray)),
-        TextButton(
-          onPressed: () {},
-          child: Text(
-            "Sign Up",
-            style: TextStyle(color: kDark, fontWeight: FontWeight.w800),
-          ),
-        ),
-      ],
-    ),
-          
+          FooterSection(mainAxisAlignment: MainAxisAlignment.start),
         ],
       ),
     );
@@ -52,10 +39,12 @@ class LoginFormFields extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _label("Email"),
-        _inputFiled(Icons.mail_outline_rounded, "example@gmail.com"),
+        _inputField(Icons.mail_outline_rounded, "example@gmail.com"),
+
         const SizedBox(height: 24),
+
         _label("Password"),
-        _inputFiled(
+        _inputField(
           Icons.lock_outline_rounded,
           "********",
           isPassword: true,
@@ -104,7 +93,7 @@ class LoginFormFields extends StatelessWidget {
     );
   }
 
-  Widget _inputFiled(
+  Widget _inputField(
     IconData icon,
     String hint, {
     bool isPassword = false,
@@ -146,7 +135,7 @@ class LoginButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: SizedBox(
         width: double.infinity,
-        height: 60,
+        height: 50,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: kDark,
@@ -172,39 +161,99 @@ class SocialLoginSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Center(
-          child: Text("Or continue with", style: TextStyle(color: kGray)),
-        ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Column(
+        children: [
+          const SizedBox(height: 30.0),
+          Row(
+            children: [
+              Expanded(child: Divider(color: kGrayShade, thickness: 1)),
 
-        const SizedBox(height: 24.0),
-      ],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  "Or continue with",
+                  style: TextStyle(color: kGray, fontSize: 14),
+                ),
+              ),
+
+              Expanded(child: Divider(color: kGrayShade, thickness: 1)),
+            ],
+          ),
+
+          const SizedBox(height: 30.0),
+
+          _socialButton(
+            text: "Login With Google",
+            imageUrl: "https://cdn-icons-png.flaticon.com/512/300/300221.png",
+            backgroundColor: kWhite,
+            textColor: kGray,
+            borderColor: kGrayShade,
+          ),
+
+          const SizedBox(height: 14),
+
+          _socialButton(
+            text: "Login With Facebook",
+            imageUrl: "https://cdn-icons-png.flaticon.com/512/733/733547.png",
+            backgroundColor: kBlue,
+            textColor: kWhite,
+            borderColor: kBlue,
+          ),
+
+          const SizedBox(height: 14),
+
+          _socialButton(
+            text: "Login With Github",
+            imageUrl: "https://img.icons8.com/ios-filled/100/FFFFFF/github.png",
+            backgroundColor: kDark,
+            textColor: kWhite,
+            borderColor: kDark,
+          ),
+
+          SizedBox(height: 14,),
+          FooterSection(mainAxisAlignment: MainAxisAlignment.center),
+        ],
+      ),
     );
   }
 
-  Widget _tile(String label, String? imgUrl, {IconData? icon}) {
-    return Expanded(
-      child: Container(
-        height: 58,
-        decoration: BoxDecoration(
-          color: kWhite,
-          border: Border.all(color: kRed),
-          borderRadius: BorderRadius.circular(16),
+  Widget _socialButton({
+    required String text,
+    required String imageUrl,
+    required Color backgroundColor,
+    required Color textColor,
+    required Color borderColor,
+    VoidCallback? onPressed,
+  }) {
+    return SizedBox(
+      width: double.infinity,
+      height: 42,
+      child: ElevatedButton(
+        onPressed: onPressed ?? () {},
+        style: ElevatedButton.styleFrom(
+          elevation: 0,
+          backgroundColor: backgroundColor,
+          foregroundColor: textColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+            side: BorderSide(color: borderColor),
+          ),
         ),
+
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (imgUrl != null)
-              Image.network(imgUrl, height: 18)
-            else
-              Icon(icon, size: 22, color: kDark),
-            const SizedBox(width: 12),
+            Image.network(imageUrl, height: 22, width: 22),
+
+            const SizedBox(width: 10),
+
             Text(
-              label,
+              text,
               style: TextStyle(
-                fontWeight: FontWeight.w700,
-                color: kDark,
+                color: textColor,
+                fontWeight: FontWeight.w600,
                 fontSize: 15,
               ),
             ),
@@ -216,19 +265,20 @@ class SocialLoginSection extends StatelessWidget {
 }
 
 class FooterSection extends StatelessWidget {
-  const FooterSection({super.key});
+  const FooterSection({super.key, required this.mainAxisAlignment});
+  final MainAxisAlignment mainAxisAlignment;
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: mainAxisAlignment,
       children: [
         Text("Don't have an account?", style: TextStyle(color: kGray)),
         TextButton(
           onPressed: () {},
           child: Text(
             "Sign Up",
-            style: TextStyle(color: kDark, fontWeight: FontWeight.w800),
+            style: TextStyle(color: kDark, fontWeight: FontWeight.w700),
           ),
         ),
       ],

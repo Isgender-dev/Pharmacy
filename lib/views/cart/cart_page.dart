@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
 import 'package:pharmacy/common/custom_container.dart';
 import 'package:pharmacy/constants/constants.dart';

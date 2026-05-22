@@ -17,10 +17,9 @@ class ProfilePage extends StatelessWidget {
       body: Column(
         children: [
           LoginHeader(), 
-          LoginFormFields(isPasswordVisible: false),
+          LoginFormFields(isPasswordVisible: false,),
           LoginButton(),
           SocialLoginSection(),
-          FooterSection(),
           ],
       ),
     );
