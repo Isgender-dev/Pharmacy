@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pharmacy/constants/constants.dart';
+import 'package:pharmacy/services/auth_service.dart';
 
 class LoginHeader extends StatelessWidget {
   const LoginHeader({super.key});
@@ -14,7 +15,7 @@ class LoginHeader extends StatelessWidget {
         children: [
           const SizedBox(height: 10),
           Text(
-            "Sign in to your account",
+            "Hasabyňyza giriň",
             style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.w600,
@@ -23,6 +24,7 @@ class LoginHeader extends StatelessWidget {
             ),
           ),
           FooterSection(mainAxisAlignment: MainAxisAlignment.start),
+          SizedBox(height: 20),
         ],
       ),
     );
@@ -31,20 +33,32 @@ class LoginHeader extends StatelessWidget {
 
 class LoginFormFields extends StatelessWidget {
   final bool isPasswordVisible;
-  const LoginFormFields({super.key, required this.isPasswordVisible});
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+  const LoginFormFields({
+    super.key,
+    required this.isPasswordVisible,
+    required this.emailController,
+    required this.passwordController,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _label("Email"),
-        _inputField(Icons.mail_outline_rounded, "example@gmail.com"),
+        _label("E-poçta"),
+        _inputField(
+          emailController,
+          Icons.mail_outline_rounded,
+          "mysal@gmail.com",
+        ),
 
         const SizedBox(height: 24),
 
-        _label("Password"),
+        _label("Açar söz"),
         _inputField(
+          passwordController,
           Icons.lock_outline_rounded,
           "********",
           isPassword: true,
@@ -60,15 +74,15 @@ class LoginFormFields extends StatelessWidget {
           ),
         ),
 
-        SizedBox(height: 10.0),
+        SizedBox(height: 20.0),
 
         Padding(
           padding: const EdgeInsets.only(left: 20.0),
-          child: TextButton(
-            onPressed: () {},
+          child: GestureDetector(
+            onTap: () {},
             child: Text(
-              "Forgot password?",
-              style: TextStyle(fontWeight: FontWeight.w800, color: kDark),
+              "Açar sözüňizi unutdyňyzmy?",
+              style: TextStyle(fontWeight: FontWeight.w700, color: kDark),
             ),
           ),
         ),
@@ -94,6 +108,7 @@ class LoginFormFields extends StatelessWidget {
   }
 
   Widget _inputField(
+    TextEditingController controller,
     IconData icon,
     String hint, {
     bool isPassword = false,
@@ -104,6 +119,7 @@ class LoginFormFields extends StatelessWidget {
       child: Container(
         // ignore: sort_child_properties_last
         child: TextField(
+          controller: controller,
           cursorColor: kPrimary,
           obscureText: isPassword && !isPasswordVisible,
           style: TextStyle(color: kDark),
@@ -127,7 +143,13 @@ class LoginFormFields extends StatelessWidget {
 }
 
 class LoginButton extends StatelessWidget {
-  const LoginButton({super.key});
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+  const LoginButton({
+    super.key,
+    required this.emailController,
+    required this.passwordController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -138,6 +160,7 @@ class LoginButton extends StatelessWidget {
         height: 50,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
+            shadowColor: kTransparent,
             backgroundColor: kDark,
             foregroundColor: kWhite,
             shape: RoundedRectangleBorder(
@@ -145,9 +168,20 @@ class LoginButton extends StatelessWidget {
             ),
             elevation: 0,
           ),
-          onPressed: () {},
+          onPressed: () async {
+            try {
+              final response = await AuthService().login(
+                email: emailController.text.trim(),
+                password: passwordController.text,
+              );
+
+              print(response.data);
+            } catch (e) {
+              print(e);
+            }
+          },
           child: const Text(
-            "Login",
+            "Giriş",
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
           ),
         ),
@@ -173,7 +207,7 @@ class SocialLoginSection extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
-                  "Or continue with",
+                  "Ýa-da şunuň bilen dowam ediň",
                   style: TextStyle(color: kGray, fontSize: 14),
                 ),
               ),
@@ -185,7 +219,7 @@ class SocialLoginSection extends StatelessWidget {
           const SizedBox(height: 30.0),
 
           _socialButton(
-            text: "Login With Google",
+            text: "Google arkaly giriş",
             imageUrl: "https://cdn-icons-png.flaticon.com/512/300/300221.png",
             backgroundColor: kWhite,
             textColor: kGray,
@@ -195,7 +229,7 @@ class SocialLoginSection extends StatelessWidget {
           const SizedBox(height: 14),
 
           _socialButton(
-            text: "Login With Facebook",
+            text: "Facebook arkaly giriş",
             imageUrl: "https://cdn-icons-png.flaticon.com/512/733/733547.png",
             backgroundColor: kBlue,
             textColor: kWhite,
@@ -205,14 +239,14 @@ class SocialLoginSection extends StatelessWidget {
           const SizedBox(height: 14),
 
           _socialButton(
-            text: "Login With Github",
+            text: "Github arkaly giriş",
             imageUrl: "https://img.icons8.com/ios-filled/100/FFFFFF/github.png",
             backgroundColor: kDark,
             textColor: kWhite,
             borderColor: kDark,
           ),
 
-          SizedBox(height: 14,),
+          SizedBox(height: 14),
           FooterSection(mainAxisAlignment: MainAxisAlignment.center),
         ],
       ),
@@ -233,6 +267,7 @@ class SocialLoginSection extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed ?? () {},
         style: ElevatedButton.styleFrom(
+          shadowColor: kTransparent,
           elevation: 0,
           backgroundColor: backgroundColor,
           foregroundColor: textColor,
@@ -273,15 +308,41 @@ class FooterSection extends StatelessWidget {
     return Row(
       mainAxisAlignment: mainAxisAlignment,
       children: [
-        Text("Don't have an account?", style: TextStyle(color: kGray)),
-        TextButton(
-          onPressed: () {},
-          child: Text(
-            "Sign Up",
-            style: TextStyle(color: kDark, fontWeight: FontWeight.w700),
+        Text("Hasabyňyz ýokmy?", style: TextStyle(color: kGray)),
+        Padding(
+          padding: const EdgeInsets.only(left: 5.0),
+          child: GestureDetector(
+            onTap: () {},
+            // onDoubleTap: () {
+            //   print('click 2');
+            // },
+            // onLongPress: () {
+            //   showDialog(
+            //     context: context,
+            //     builder: (context) {
+            //       return AlertDialog(title: Text('Hello'));
+            //     },
+            //   );
+            // },
+            child: Text(
+              "Agza boluň",
+              style: TextStyle(color: kDark, fontWeight: FontWeight.w700),
+            ),
           ),
         ),
       ],
+    );
+  }
+}
+
+class DashboardScreen extends StatelessWidget {
+  const DashboardScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Dashboar')),
+      body: const Center(child: Text('Hoş geldinidz')),
     );
   }
 }

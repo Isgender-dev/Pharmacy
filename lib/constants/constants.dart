@@ -19,6 +19,7 @@ const kDark = Color(0xff000000);
 const kRed = Color(0xffe81e4d);
 const kBlue = Color(0xFF1877F2);
 const kOffWhite = Color(0xffF3F4F8);
+const kTransparent = Color(0x00000000);
 
 double height = 825.0;
 double width = 375.0;
