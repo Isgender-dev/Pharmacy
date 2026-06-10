@@ -1,7 +1,5 @@
-// ignore_for_file: unused_import
-
 import 'package:flutter/material.dart';
-import 'package:pharmacy/common/custom_container.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:pharmacy/constants/constants.dart';
 
 class CartPage extends StatelessWidget {
@@ -9,19 +7,33 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Sebet'),
-        backgroundColor: kPrimaryLight,
-        foregroundColor: kPrimary,
-        centerTitle: true,
+    return Drawer(
+      child: SafeArea(
+        child: Column(children: [_buildIcon(), _buildCloseButton(context)]),
       ),
-      body: 
-      // SafeArea(child: CustomContainer(containerContent: 
-      // Container(),
-      Center(child: Text('Sebet sahypasy'))
-      // ),
-      // ),
+    );
+  }
+
+  Align _buildIcon() => Align(
+    alignment: Alignment.centerLeft,
+    child: Row(
+      children: [
+        Icon(AntDesign.shoppingcart),
+        SizedBox(width: 10),
+        Text('Sebet'),
+      ],
+    ),
+  );
+
+  Align _buildCloseButton(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: IconButton(
+        icon: Icon(Icons.close, color: kGray),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      ),
     );
   }
 }

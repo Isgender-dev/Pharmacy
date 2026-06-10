@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pharmacy/constants/constants.dart';
 import 'package:pharmacy/services/auth_service.dart';
+import 'package:pharmacy/views/profile/profile.dart';
 
 class LoginHeader extends StatelessWidget {
   const LoginHeader({super.key});
@@ -24,7 +25,7 @@ class LoginHeader extends StatelessWidget {
             ),
           ),
           FooterSection(mainAxisAlignment: MainAxisAlignment.start),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
         ],
       ),
     );
@@ -35,11 +36,13 @@ class LoginFormFields extends StatelessWidget {
   final bool isPasswordVisible;
   final TextEditingController emailController;
   final TextEditingController passwordController;
+  final VoidCallback onTogglePassword;
   const LoginFormFields({
     super.key,
     required this.isPasswordVisible,
     required this.emailController,
     required this.passwordController,
+    required this.onTogglePassword,
   });
 
   @override
@@ -63,7 +66,7 @@ class LoginFormFields extends StatelessWidget {
           "********",
           isPassword: true,
           suffix: IconButton(
-            onPressed: () {},
+            onPressed: onTogglePassword,
             icon: Icon(
               isPasswordVisible
                   ? Icons.visibility_rounded
@@ -74,7 +77,7 @@ class LoginFormFields extends StatelessWidget {
           ),
         ),
 
-        SizedBox(height: 20.0),
+        const SizedBox(height: 20.0),
 
         Padding(
           padding: const EdgeInsets.only(left: 20.0),
@@ -117,10 +120,13 @@ class LoginFormFields extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Container(
-        // ignore: sort_child_properties_last
+        decoration: BoxDecoration(
+          color: kWhite,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: kDark),
+        ),
         child: TextField(
           controller: controller,
-          cursorColor: kPrimary,
           obscureText: isPassword && !isPasswordVisible,
           style: TextStyle(color: kDark),
           decoration: InputDecoration(
@@ -132,11 +138,6 @@ class LoginFormFields extends StatelessWidget {
             contentPadding: const EdgeInsets.symmetric(vertical: 18),
           ),
         ),
-        decoration: BoxDecoration(
-          color: kWhite,
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: kDark),
-        ),
       ),
     );
   }
@@ -145,6 +146,7 @@ class LoginFormFields extends StatelessWidget {
 class LoginButton extends StatelessWidget {
   final TextEditingController emailController;
   final TextEditingController passwordController;
+
   const LoginButton({
     super.key,
     required this.emailController,
@@ -176,8 +178,19 @@ class LoginButton extends StatelessWidget {
               );
 
               print(response.data);
+              if (!context.mounted) return;
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const Profile()),
+              );
             } catch (e) {
-              print(e);
+              if (!context.mounted) return;
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(e.toString()),
+                  backgroundColor: Colors.red,
+                ),
+              );
             }
           },
           child: const Text(
@@ -331,18 +344,6 @@ class FooterSection extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Dashboar')),
-      body: const Center(child: Text('Hoş geldinidz')),
     );
   }
 }

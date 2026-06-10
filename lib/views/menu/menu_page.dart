@@ -12,41 +12,10 @@ class MenuPage extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: IconButton(
-                  icon: Icon(Icons.close, color: kGray),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ),
-
-              Container(
-                decoration: BoxDecoration(
-                  border: Border(top: BorderSide(color: kGrayLight)),
-                ),
-
-                child: TabBar(
-                  indicatorColor: kPrimary,
-                  indicatorSize: TabBarIndicatorSize.tab,
-                  labelColor: kPrimary,
-                  labelStyle: TextStyle(fontWeight: FontWeight.w600),
-                  unselectedLabelColor: kGray,
-                  unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w500),
-                  tabs: [
-                    Tab(text: "Bölümler"),
-                    Tab(text: "Sahypalar"),
-                  ],
-                ),
-              ),
-
+              _buildCloseButton(context),
+              _buildTabBar(),
               Expanded(
-                child: TabBarView(
-                  children: [
-                    _categories(),
-                  ],
-                ),
+                child: TabBarView(children: [_categoriesTab(), _pagesTab()]),
               ),
             ],
           ),
@@ -54,31 +23,70 @@ class MenuPage extends StatelessWidget {
       ),
     );
   }
+
+  Align _buildCloseButton(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: IconButton(
+        icon: Icon(Icons.close, color: kGray),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      ),
+    );
+  }
+
+  Container _buildTabBar() {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(top: BorderSide(color: kGrayLight)),
+      ),
+
+      child: TabBar(
+        indicatorColor: kPrimary,
+        indicatorSize: TabBarIndicatorSize.tab,
+        labelColor: kPrimary,
+        labelStyle: const TextStyle(fontWeight: FontWeight.w600),
+        unselectedLabelColor: kGray,
+        unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500),
+        tabs: [
+          Tab(text: "Bölümler"),
+          Tab(text: "Sahypalar"),
+        ],
+      ),
+    );
+  }
 }
 
-class _categories extends StatelessWidget {
-  const _categories();
+class _categoriesTab extends StatelessWidget {
+  const _categoriesTab();
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Row(
-            children: [
-              Expanded(
-                child: FloatingActionButton(
-                  onPressed: () {},
-                  foregroundColor: kPrimary,
-                  backgroundColor: kPrimaryLight,
-                  child: Icon(Icons.add),
-                ),
-              ),
-            ],
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: FloatingActionButton(
+              elevation: 1,
+              onPressed: () {},
+              foregroundColor: kPrimary,
+              backgroundColor: kPrimaryLight,
+              child: const Icon(Icons.add),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
+  }
+}
+
+class _pagesTab extends StatelessWidget {
+  const _pagesTab();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: Text('Sahypalar'));
   }
 }

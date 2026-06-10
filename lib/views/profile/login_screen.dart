@@ -35,6 +35,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 emailController: emailController,
                 passwordController: passwordController,
                 isPasswordVisible: isPasswordVisible,
+                onTogglePassword: () {
+                  setState(() => isPasswordVisible = !isPasswordVisible);
+                },
               ),
 
               LoginButton(

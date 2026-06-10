@@ -23,14 +23,23 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Pharmacy',
-          theme: ThemeData(
-            scaffoldBackgroundColor: kOffWhite,
-            iconTheme: const IconThemeData(color: kDark),
-            primarySwatch: Colors.grey,
-          ),
+          theme: _buildTheme(),
           home: defaultHome,
         );
       },
     );
+  }
+
+  ThemeData _buildTheme() {
+    return ThemeData(
+          textSelectionTheme: TextSelectionThemeData(
+            selectionHandleColor: kPrimary,
+            selectionColor: kPrimaryLight,
+            cursorColor: kPrimary
+          ),
+          scaffoldBackgroundColor: kOffWhite,
+          iconTheme: const IconThemeData(color: kDark),
+          primarySwatch: Colors.grey,
+        );
   }
 }
