@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:pharmacy/core/token_storage.dart';
 import 'api_service.dart';
 
 class AuthService {
@@ -6,12 +7,18 @@ class AuthService {
     required String email,
     required String password,
   }) async {
-    return await ApiService.dio.post(
-      '/api/login',
+    final response = await ApiService.dio.post(
+      '/login',
       queryParameters: {
         'email': email,
         'password': password,
       },
     );
+
+    print(response.data);
+
+    TokenStorage.token = response.data['token'];
+
+    return response;
   }
 }

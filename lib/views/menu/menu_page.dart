@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pharmacy/constants/constants.dart';
+import 'package:pharmacy/core/token_storage.dart';
+import 'package:pharmacy/services/category_service.dart';
+import 'package:pharmacy/views/menu/menu_item.dart';
 
 class MenuPage extends StatelessWidget {
   const MenuPage({super.key});
@@ -58,26 +61,57 @@ class MenuPage extends StatelessWidget {
   }
 }
 
-class _categoriesTab extends StatelessWidget {
+class _categoriesTab extends StatefulWidget {
   const _categoriesTab();
 
   @override
+  State<_categoriesTab> createState() => _categoriesTabState();
+}
+
+class _categoriesTabState extends State<_categoriesTab> {
+  List categories = [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadCategories();
+  }
+
+  Future<void> loadCategories() async {
+    try {
+      final response = await CategoryService().getCategories(
+        TokenStorage.token!,
+      );
+
+      print(response.data);
+
+      print("STATUS: ${response.statusCode}");
+      print("DATA: ${response.data}");
+
+      setState(() {
+        categories = response.data['data'];
+      });
+    } catch (e) {
+      print("ERROR: $e");
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Row(
-        children: [
-          Expanded(
-            child: FloatingActionButton(
-              elevation: 1,
-              onPressed: () {},
-              foregroundColor: kPrimary,
-              backgroundColor: kPrimaryLight,
-              child: const Icon(Icons.add),
-            ),
-          ),
-        ],
-      ),
+    if (categories.isEmpty) {
+      return const Center(child: CircularProgressIndicator(color: kPrimary));
+    }
+    return ListView.builder(
+      itemCount: categories.length,
+      itemBuilder: (context, index) {
+        final category = categories[index];
+
+        return MenuItem(
+          icon: Icons.category,
+          title: category['name'],
+          onTap: () {},
+        );
+      },
     );
   }
 }
@@ -87,6 +121,49 @@ class _pagesTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('Sahypalar'));
+    return Scaffold(
+      body: ListView(
+        children: [
+          MenuItem(icon: Icons.card_giftcard, title: "Teklipler", onTap: () {}),
+          MenuItem(icon: Icons.flash_on, title: "Ýyldyrym satuw", onTap: () {}),
+          MenuItem(
+            icon: Icons.shopping_bag_outlined,
+            title: "Töleg",
+            onTap: () {},
+          ),
+          MenuItem(
+            icon: Icons.help_outline,
+            title: "Kömek (FAQ)",
+            onTap: () {},
+          ),
+          MenuItem(
+            icon: Icons.people_outline,
+            title: "Biz barada",
+            onTap: () {},
+          ),
+          MenuItem(
+            icon: Icons.phone_outlined,
+            title: "Habarlaşmak",
+            onTap: () {},
+          ),
+          MenuItem(
+            icon: Icons.privacy_tip_outlined,
+            title: "Gizlinlik syýasaty",
+            onTap: () {},
+          ),
+          MenuItem(
+            icon: Icons.sentiment_dissatisfied,
+            title: "Paroly unutdym",
+            onTap: () {},
+          ),
+          MenuItem(
+            icon: Icons.description_outlined,
+            title: "Düzgünler we şertler",
+            onTap: () {},
+          ),
+          MenuItem(icon: Icons.error_outline, title: "Tapylmady", onTap: () {}),
+        ],
+      ),
+    );
   }
 }

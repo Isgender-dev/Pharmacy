@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pharmacy/constants/constants.dart';
 import 'package:pharmacy/services/auth_service.dart';
+import 'package:pharmacy/views/entrypoint.dart';
 import 'package:pharmacy/views/profile/profile.dart';
+import 'package:pharmacy/views/profile/profile_page.dart';
 
 class LoginHeader extends StatelessWidget {
   const LoginHeader({super.key});
@@ -181,7 +183,7 @@ class LoginButton extends StatelessWidget {
               if (!context.mounted) return;
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => const Profile()),
+                MaterialPageRoute(builder: (context) => MainScreen()),
               );
             } catch (e) {
               if (!context.mounted) return;

@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 class ApiService {
   static final Dio dio = Dio(
     BaseOptions(
-      baseUrl: 'http://192.168.0.191:8080',
+      baseUrl: 'http://192.168.0.191:8080/api',
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
       headers: {
@@ -11,4 +11,8 @@ class ApiService {
       },
     ),
   );
+
+    static void setToken(String token) {
+    dio.options.queryParameters['token'] = token;
+  }
 }

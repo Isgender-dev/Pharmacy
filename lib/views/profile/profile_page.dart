@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:pharmacy/constants/constants.dart';
+import 'package:pharmacy/core/token_storage.dart';
+import 'package:pharmacy/views/profile/profile.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -10,7 +12,20 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  
+  @override
+void initState() {
+  super.initState();
+
+  if (TokenStorage.token == null || TokenStorage.token!.isEmpty) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const Profile()),
+      );
+    });
+  }
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,50 +102,46 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
           ),
-              const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 12),
-      child: Text(
-        "Dolandyryş paneli",
-        style: TextStyle(
-          fontSize: 28,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-    ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12),
+            child: Text(
+              "Dolandyryş paneli",
+              style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
+            ),
+          ),
 
-    const SizedBox(height: 15),
+          const SizedBox(height: 15),
 
-    _DashboardCard(
-      icon: AntDesign.shoppingcart,
-      title: "Jemi sargytlar",
-      iconBg: kRedLight,
-      iconColor: kRed,
-    ),
+          _DashboardCard(
+            icon: AntDesign.shoppingcart,
+            title: "Jemi sargytlar",
+            iconBg: kRedLight,
+            iconColor: kRed,
+          ),
 
-    _DashboardCard(
-      icon: AntDesign.reload1,
-      title: "Garaşylýan sargytlar",
-      iconBg: kOrangeLight,
-      iconColor: kOrange
-    ),
+          _DashboardCard(
+            icon: AntDesign.reload1,
+            title: "Garaşylýan sargytlar",
+            iconBg: kOrangeLight,
+            iconColor: kOrange,
+          ),
 
-    _DashboardCard(
-      icon: AntDesign.car,
-      title: "Sargyt işlenýär",
-      iconBg: kIndigoLight,
-      iconColor: kIndigo
-    ),
-    _DashboardCard(
-      icon: AntDesign.check,
-      title: "Tamamlanan sargytlar",
-      iconBg: kGreenLight,
-      iconColor: kGreen
-    ),
+          _DashboardCard(
+            icon: AntDesign.car,
+            title: "Sargyt işlenýär",
+            iconBg: kIndigoLight,
+            iconColor: kIndigo,
+          ),
+          _DashboardCard(
+            icon: AntDesign.check,
+            title: "Tamamlanan sargytlar",
+            iconBg: kGreenLight,
+            iconColor: kGreen,
+          ),
         ],
       ),
     );
   }
-
 }
 
 class _MenuButton extends StatelessWidget {
@@ -157,16 +168,13 @@ class _MenuButton extends StatelessWidget {
       child: SizedBox(
         width: double.infinity,
         child: Row(
-          children: [
-            Icon(icon),
-            const SizedBox(width: 15),
-            Text(title),
-          ],
+          children: [Icon(icon), const SizedBox(width: 15), Text(title)],
         ),
       ),
     );
   }
 }
+
 class _DashboardCard extends StatelessWidget {
   final IconData icon;
   final String title;
@@ -183,10 +191,7 @@ class _DashboardCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: 12,
-        vertical: 8,
-      ),
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: kWhite,
@@ -198,18 +203,12 @@ class _DashboardCard extends StatelessWidget {
           CircleAvatar(
             radius: 24,
             backgroundColor: iconBg,
-            child: Icon(
-              icon,
-              color: iconColor,
-            ),
+            child: Icon(icon, color: iconColor),
           ),
           const SizedBox(width: 15),
           Text(
             title,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-            ),
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
           ),
         ],
       ),

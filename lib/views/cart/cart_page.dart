@@ -9,31 +9,41 @@ class CartPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: SafeArea(
-        child: Column(children: [_buildIcon(), _buildCloseButton(context)]),
+        child: Column(
+          children: [
+            DecoratedBox(
+              decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: kGrayLight)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _buildIcon(),
+                    _buildCloseButton(context),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Align _buildIcon() => Align(
-    alignment: Alignment.centerLeft,
-    child: Row(
-      children: [
-        Icon(AntDesign.shoppingcart),
-        SizedBox(width: 10),
-        Text('Sebet'),
-      ],
-    ),
+  Widget _buildIcon() => Row(
+    children: [
+      Icon(AntDesign.shoppingcart),
+      SizedBox(width: 10),
+      Text('Sebet', style: TextStyle(fontWeight: FontWeight.w500),),
+    ],
   );
 
-  Align _buildCloseButton(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: IconButton(
-        icon: Icon(Icons.close, color: kGray),
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-      ),
+  Widget _buildCloseButton(BuildContext context) => IconButton(
+      icon: Icon(Icons.close, color: kGray),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
     );
   }
-}

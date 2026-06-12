@@ -31,24 +31,26 @@ class _ProfileState extends State<Profile> {
         foregroundColor: kPrimary,
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          LoginHeader(),
-          LoginFormFields(
-            isPasswordVisible: isPasswordVisible,
-            emailController: emailController,
-            passwordController: passwordController,
-            onTogglePassword: () {
-              setState(() => isPasswordVisible = !isPasswordVisible);
-            },
-          ),
-          LoginButton(
-            emailController: emailController,
-            passwordController: passwordController,
-          ),
-          SocialLoginSection(),
-        ],
-      ),
+      body: ListView(
+        children: [Column(
+          children: [
+            LoginHeader(),
+            LoginFormFields(
+              isPasswordVisible: isPasswordVisible,
+              emailController: emailController,
+              passwordController: passwordController,
+              onTogglePassword: () {
+                setState(() => isPasswordVisible = !isPasswordVisible);
+              },
+            ),
+            LoginButton(
+              emailController: emailController,
+              passwordController: passwordController,
+            ),
+            SocialLoginSection(),
+          ],
+        ),
+      ]),
     );
   }
 }
