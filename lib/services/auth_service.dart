@@ -8,16 +8,16 @@ class AuthService {
     required String password,
   }) async {
     final response = await ApiService.dio.post(
-      '/login',
-      queryParameters: {
-        'email': email,
-        'password': password,
-      },
+      '/auth/login',
+      data: {'email': email, 'password': password},
     );
 
-    print(response.data);
+    print("LOGIN RESPONSE: ${response.data}");
 
-    TokenStorage.token = response.data['token'];
+    final token = response.data['data']?['token'];
+
+    await TokenStorage.saveToken(token);
+    ApiService.setToken(token);
 
     return response;
   }

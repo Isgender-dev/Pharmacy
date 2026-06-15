@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pharmacy/constants/constants.dart';
-import 'package:pharmacy/core/token_storage.dart';
 import 'package:pharmacy/services/category_service.dart';
 import 'package:pharmacy/views/menu/menu_item.dart';
 
@@ -45,7 +44,7 @@ class MenuPage extends StatelessWidget {
         border: Border(top: BorderSide(color: kGrayLight)),
       ),
 
-      child: TabBar(
+      child: const TabBar(
         indicatorColor: kPrimary,
         indicatorSize: TabBarIndicatorSize.tab,
         labelColor: kPrimary,
@@ -69,7 +68,8 @@ class _categoriesTab extends StatefulWidget {
 }
 
 class _categoriesTabState extends State<_categoriesTab> {
-  List categories = [];
+ List<dynamic> categories = [];
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -79,28 +79,27 @@ class _categoriesTabState extends State<_categoriesTab> {
 
   Future<void> loadCategories() async {
     try {
-      final response = await CategoryService().getCategories(
-        TokenStorage.token!,
-      );
-
-      print(response.data);
-
-      print("STATUS: ${response.statusCode}");
-      print("DATA: ${response.data}");
+      final response = await CategoryService().getCategories();
 
       setState(() {
-        categories = response.data['data'];
+        categories = response.data['data'] ?? [];
+        isLoading = false;
       });
     } catch (e) {
-      print("ERROR: $e");
+      setState(() => isLoading = false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (categories.isEmpty) {
+    if (isLoading) {
       return const Center(child: CircularProgressIndicator(color: kPrimary));
     }
+
+    if (categories.isEmpty) {
+      return const Center(child: Text("Bölümler entek ýok"));
+    }
+
     return ListView.builder(
       itemCount: categories.length,
       itemBuilder: (context, index) {
@@ -108,7 +107,7 @@ class _categoriesTabState extends State<_categoriesTab> {
 
         return MenuItem(
           icon: Icons.category,
-          title: category['name'],
+          title: category['name'] ?? '',
           onTap: () {},
         );
       },

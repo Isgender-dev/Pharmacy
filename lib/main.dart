@@ -2,11 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacy/constants/constants.dart';
 import 'package:get/get.dart';
+import 'package:pharmacy/core/token_storage.dart';
+import 'package:pharmacy/services/api_service.dart';
 import 'package:pharmacy/views/entrypoint.dart';
 
 Widget defaultHome = MainScreen();
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final token = await TokenStorage.getToken();
+  if (token != null) {
+    ApiService.setToken(token);
+  }
+
   runApp(const MyApp());
 }
 

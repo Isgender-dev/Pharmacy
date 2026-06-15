@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:pharmacy/constants/constants.dart';
 import 'package:pharmacy/services/auth_service.dart';
 import 'package:pharmacy/views/entrypoint.dart';
-import 'package:pharmacy/views/profile/profile.dart';
-import 'package:pharmacy/views/profile/profile_page.dart';
 
 class LoginHeader extends StatelessWidget {
   const LoginHeader({super.key});
@@ -174,17 +174,14 @@ class LoginButton extends StatelessWidget {
           ),
           onPressed: () async {
             try {
-              final response = await AuthService().login(
+              await AuthService().login(
                 email: emailController.text.trim(),
                 password: passwordController.text,
               );
 
-              print(response.data);
               if (!context.mounted) return;
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => MainScreen()),
-              );
+
+              Get.offAll(() => MainScreen());
             } catch (e) {
               if (!context.mounted) return;
               ScaffoldMessenger.of(context).showSnackBar(

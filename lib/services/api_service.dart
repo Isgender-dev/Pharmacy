@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:pharmacy/core/token_storage.dart';
 
 class ApiService {
   static final Dio dio = Dio(
@@ -6,13 +7,40 @@ class ApiService {
       baseUrl: 'http://192.168.0.191:8080/api',
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: {'Content-Type': 'application/json'},
     ),
   );
 
-    static void setToken(String token) {
-    dio.options.queryParameters['token'] = token;
+  static String? _token;
+  static bool _initialized = false;
+
+  static void setToken(String token) {
+    _token = token;
+  }
+
+  static void init() {
+    if (_initialized) return;
+    _initialized = true;
+
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          if (_token != null) {
+            options.headers['Authorization'] = 'Bearer $_token';
+          }
+          handler.next(options);
+        },
+
+        onError: (e, handler) {
+          if (e.response?.statusCode == 401) {
+            _token = null;
+            TokenStorage.token = null;
+
+          }
+
+          handler.next(e);
+        },
+      ),
+    );
   }
 }
