@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:pharmacy/core/token_storage.dart';
+// import 'package:pharmacy/core/token_storage.dart';
 
 class ApiService {
   static final Dio dio = Dio(
@@ -19,28 +19,33 @@ class ApiService {
   }
 
   static void init() {
-    if (_initialized) return;
-    _initialized = true;
+  if (_initialized) return;
+  _initialized = true;
 
-    dio.interceptors.add(
-      InterceptorsWrapper(
-        onRequest: (options, handler) {
-          if (_token != null) {
-            options.headers['Authorization'] = 'Bearer $_token';
-          }
-          handler.next(options);
-        },
+  dio.interceptors.add(
+    InterceptorsWrapper(
+      onRequest: (options, handler) {
+        if (_token != null) {
+          options.headers['Authorization'] = 'Bearer $_token';
+        }
+        handler.next(options);
+      },
+      onError: (e, handler) {
+        print('DIO ERROR: ${e.error}');
+        handler.next(e);
+      },
+    ),
+  );
 
-        onError: (e, handler) {
-          if (e.response?.statusCode == 401) {
-            _token = null;
-            TokenStorage.token = null;
-
-          }
-
-          handler.next(e);
-        },
-      ),
-    );
-  }
+  dio.interceptors.add(
+    LogInterceptor(
+      request: true,
+      requestHeader: true,
+      requestBody: true,
+      responseHeader: true,
+      responseBody: true,
+      error: true,
+    ),
+  );
+}
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pharmacy/constants/constants.dart';
+import 'package:pharmacy/core/token_storage.dart';
 import 'package:pharmacy/services/category_service.dart';
 import 'package:pharmacy/views/menu/menu_item.dart';
 
@@ -68,7 +69,7 @@ class _categoriesTab extends StatefulWidget {
 }
 
 class _categoriesTabState extends State<_categoriesTab> {
- List<dynamic> categories = [];
+  List<dynamic> categories = [];
   bool isLoading = true;
 
   @override
@@ -78,14 +79,21 @@ class _categoriesTabState extends State<_categoriesTab> {
   }
 
   Future<void> loadCategories() async {
+    print("TOKEN: ${TokenStorage.token}");
+
     try {
       final response = await CategoryService().getCategories();
+
+      print("RESPONSE: ${response.data}");
 
       setState(() {
         categories = response.data['data'] ?? [];
         isLoading = false;
       });
-    } catch (e) {
+    } catch (e, stackTrace) {
+      print('ERROR: $e');
+      print('StackTrace: $stackTrace');
+      
       setState(() => isLoading = false);
     }
   }

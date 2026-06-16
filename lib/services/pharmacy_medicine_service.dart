@@ -7,15 +7,23 @@ class PharmacyMedicineService {
     int offset = 0,
   }) async {
     try {
-      return await ApiService.dio.get(
+      final response = await ApiService.dio.get(
         '/admin/pharmacymedicines',
-        queryParameters: {
-          'limit': limit,
-          'offset': offset,
-        },
+        queryParameters: {'limit': limit, 'offset': offset},
+
+        options: Options(responseType: ResponseType.plain),
       );
+
+      print('RAW RESPONSE:');
+      print(response.data);
+
+      return response;
     } on DioException catch (e) {
-      throw Exception(e.response?.data ?? e.message);
+      print('STATUS: ${e.response?.statusCode}');
+      print("HEADERS: ${e.response?.headers}");
+      print('DATA: ${e.response?.data}');
+      print('MESSAGE: ${e.message}');
+      rethrow;
     }
   }
 }

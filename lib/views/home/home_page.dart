@@ -27,7 +27,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> loadPharmacyMedicines() async {
+    
     print("TOKEN: ${TokenStorage.token}");
+    
     if (TokenStorage.token == null || TokenStorage.token!.isEmpty) {
       setState(() => isLoading = false);
       return;
@@ -42,7 +44,11 @@ class _HomePageState extends State<HomePage> {
         pharmacyMedicines = response.data['data'] ?? [];
         isLoading = false;
       });
-    } catch (e) {
+    } catch (e, st) {
+      print('TYPE: ${e.runtimeType}');
+      print('ERROR: $e');
+      print('STACK: $st');
+
       setState(() => isLoading = false);
     }
   }
@@ -64,7 +70,7 @@ class _HomePageState extends State<HomePage> {
 
         return MenuItem(
           icon: Icons.medication_outlined,
-          title: (pharmacyMedicine['name'] ?? '').toString(),
+          title: pharmacyMedicine['name'] ?? '',
           onTap: () {},
         );
       },
