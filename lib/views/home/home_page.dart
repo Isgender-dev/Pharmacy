@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePage> {
 
         return MenuItem(
           icon: Icons.medication_outlined,
-          title: pharmacyMedicine['Name'] ?? '',
+          title: pharmacyMedicine['name'] ?? '',
           onTap: () {},
         );
       },

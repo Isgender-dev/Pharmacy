@@ -14,6 +14,49 @@ class AuthService {
 
     print("LOGIN RESPONSE: ${response.data}");
 
+    final oldToken = await TokenStorage.getToken();
+
+    if (oldToken == null) {
+      throw Exception("Hasabyňyz tapylmady!");
+    }
+
+    ApiService.setToken(oldToken);
+
+    return response;
+  }
+
+  Future<void> logout() async {
+    try {
+      final response = await ApiService.dio.post('/auth/logout');
+
+      print("LOGOUT RESPONSE: ${response.data}");
+    } on DioException catch (e) {
+      print("LOGOUT ERROR: ${e.response?.data}");
+      print("STATUS: ${e.response?.statusCode}");
+    } finally {
+      await TokenStorage.clear();
+      ApiService.setToken(null);
+    }
+  }
+
+  Future<Response> registration({
+    required String firstname,
+    required String lastname,
+    required String email,
+    required String password,
+  }) async {
+    final response = await ApiService.dio.post(
+      '/registration',
+      data: {
+        'firstname': firstname,
+        'lastname': lastname,
+        'email': email,
+        'password': password,
+      },
+    );
+
+    print("REGISTRATION RESPONSE: ${response.data}");
+
     final token = response.data['data']?['token'];
 
     await TokenStorage.saveToken(token);
@@ -21,21 +64,4 @@ class AuthService {
 
     return response;
   }
-
-Future<void> logout() async {
-  try {
-    final response = await ApiService.dio.post('/auth/logout');
-
-    print("LOGOUT RESPONSE: ${response.data}");
-
-  } on DioException catch (e) {
-
-    print("LOGOUT ERROR: ${e.response?.data}");
-    print("STATUS: ${e.response?.statusCode}");
-    
-  } finally {
-    await TokenStorage.clear();
-    ApiService.setToken(null);
-  }
-}
 }

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:pharmacy/constants/constants.dart';
-import 'package:pharmacy/views/profile/widgets/login_button.dart';
-import 'package:pharmacy/views/profile/widgets/login_form_fields.dart';
-import 'package:pharmacy/views/profile/widgets/login_header.dart';
+import 'package:pharmacy/views/profile/widgets/registration_button.dart';
+import 'package:pharmacy/views/profile/widgets/registration_form_fields.dart';
 import 'package:pharmacy/views/profile/widgets/social_login.dart';
 
-class Profile extends StatefulWidget {
-  const Profile({super.key});
+class Registration extends StatefulWidget {
+  const Registration({super.key});
 
   @override
-  State<Profile> createState() => _ProfileState();
+  State<Registration> createState() => _RegistrationState();
 }
 
-class _ProfileState extends State<Profile> {
+class _RegistrationState extends State<Registration> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -37,8 +36,8 @@ class _ProfileState extends State<Profile> {
       body: ListView(
         children: [Column(
           children: [
-            LoginHeader(),
-            LoginFormFields(
+            Registration(),
+            RegistrationFormFields(
               isPasswordVisible: isPasswordVisible,
               emailController: emailController,
               passwordController: passwordController,
@@ -46,7 +45,7 @@ class _ProfileState extends State<Profile> {
                 setState(() => isPasswordVisible = !isPasswordVisible);
               },
             ),
-            LoginButton(
+            RegistrationButton(
               emailController: emailController,
               passwordController: passwordController,
             ),

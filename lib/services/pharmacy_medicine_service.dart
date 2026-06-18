@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'api_service.dart';
 
 class PharmacyMedicineService {
-  Future<Response> getPharmacyMedicines({int limit = 10,int offset = 0}) async {
+  Future<Response> getPharmacyMedicines({int limit = 20,int offset = 0}) async {
     try {
       final response = await ApiService.dio.get(
         '/admin/medicines',
@@ -20,7 +20,7 @@ class PharmacyMedicineService {
       print("HEADERS: ${e.response?.headers}");
       print('DATA: ${e.response?.data}');
       print('MESSAGE: ${e.message}');
-      
+
       rethrow;
     }
   }
