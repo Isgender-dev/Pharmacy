@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<dynamic> pharmacyMedicines = [];
+  List<dynamic> PharmacyMedicines = [];
   bool isLoading = true;
 
   @override
@@ -27,9 +27,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> loadPharmacyMedicines() async {
-    
     print("TOKEN: ${TokenStorage.token}");
-    
+
     if (TokenStorage.token == null || TokenStorage.token!.isEmpty) {
       setState(() => isLoading = false);
       return;
@@ -37,17 +36,17 @@ class _HomePageState extends State<HomePage> {
 
     try {
       final response = await PharmacyMedicineService().getPharmacyMedicines();
-      
+
       print("RESPONSE: ${response.data}");
 
       setState(() {
-        pharmacyMedicines = response.data['data'] ?? [];
+        PharmacyMedicines = response.data['data'] ?? [];
         isLoading = false;
       });
     } catch (e, st) {
       print('TYPE: ${e.runtimeType}');
-      print('ERROR: $e');
       print('STACK: $st');
+      print('ERROR: $e');
 
       setState(() => isLoading = false);
     }
@@ -59,18 +58,18 @@ class _HomePageState extends State<HomePage> {
       return const Center(child: CircularProgressIndicator(color: kPrimary));
     }
 
-    if (pharmacyMedicines.isEmpty) {
+    if (PharmacyMedicines.isEmpty) {
       return const Center(child: Text("Dermanlar entek ýok"));
     }
 
     return ListView.builder(
-      itemCount: pharmacyMedicines.length,
+      itemCount: PharmacyMedicines.length,
       itemBuilder: (context, index) {
-        final pharmacyMedicine = pharmacyMedicines[index];
+        final pharmacyMedicine = PharmacyMedicines[index];
 
         return MenuItem(
           icon: Icons.medication_outlined,
-          title: pharmacyMedicine['name'] ?? '',
+          title: pharmacyMedicine['Name'] ?? '',
           onTap: () {},
         );
       },

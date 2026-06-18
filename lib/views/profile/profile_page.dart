@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:pharmacy/constants/constants.dart';
 import 'package:pharmacy/core/token_storage.dart';
+import 'package:pharmacy/models/user.dart';
+import 'package:pharmacy/services/auth_service.dart';
+import 'package:pharmacy/services/user_service.dart';
 import 'package:pharmacy/views/profile/profile.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -12,19 +15,40 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  @override
-void initState() {
-  super.initState();
+  User? user;
+  bool loading = true;
 
-  if (TokenStorage.token == null || TokenStorage.token!.isEmpty) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const Profile()),
-      );
-    });
+  @override
+  void initState() {
+    super.initState();
+    loadUser();
+
+    if (TokenStorage.token == null || TokenStorage.token!.isEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const Profile()),
+        );
+      });
+    }
   }
-}
+
+  Future<void> loadUser() async {
+    try {
+      final result = await UserService().getMyUser();
+
+      setState(() {
+        user = result;
+        loading = false;
+      });
+    } catch (e) {
+      print("USER ERROR: $e");
+
+      setState(() {
+        loading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +60,6 @@ void initState() {
             decoration: BoxDecoration(
               border: Border.all(color: kGrayShade),
               borderRadius: BorderRadius.circular(16),
-              color: Colors.white,
             ),
             child: Theme(
               data: Theme.of(
@@ -46,13 +69,24 @@ void initState() {
                 padding: const EdgeInsets.all(10.0),
                 child: ExpansionTile(
                   title: Text(
-                    'Name',
+                    user == null
+                        ? "Ýüklenýär..."
+                        : '${user!.FirstName} ${user!.LastName}',
                     style: TextStyle(fontWeight: FontWeight.w500),
                   ),
-                  subtitle: Text('Email', style: TextStyle(color: kGrayLight)),
+                  subtitle: Text(
+                    user?.Email ?? "",
+                    style: TextStyle(color: kGrayLight),
+                  ),
                   leading: CircleAvatar(
                     radius: 22,
                     backgroundColor: kGrayShade,
+                    child: user == null
+                        ? null
+                        : Text(
+                            user!.FirstName[0].toUpperCase(),
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                   ),
                   iconColor: kGray,
                   collapsedIconColor: kGray,
@@ -95,7 +129,15 @@ void initState() {
                     _MenuButton(
                       icon: Icons.logout,
                       title: "Çykmak",
-                      onTap: () {},
+                      onTap: () async {
+                        await AuthService().logout();
+
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (_) => const Profile()),
+                          (route) => false,
+                        );
+                      },
                     ),
                   ],
                 ),

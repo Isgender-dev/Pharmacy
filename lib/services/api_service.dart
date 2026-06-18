@@ -14,38 +14,47 @@ class ApiService {
   static String? _token;
   static bool _initialized = false;
 
-  static void setToken(String token) {
+  static void setToken(String? token) {
     _token = token;
   }
 
   static void init() {
-  if (_initialized) return;
-  _initialized = true;
+    if (_initialized) return;
+    _initialized = true;
 
-  dio.interceptors.add(
-    InterceptorsWrapper(
-      onRequest: (options, handler) {
-        if (_token != null) {
-          options.headers['Authorization'] = 'Bearer $_token';
-        }
-        handler.next(options);
-      },
-      onError: (e, handler) {
-        print('DIO ERROR: ${e.error}');
-        handler.next(e);
-      },
-    ),
-  );
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
 
-  dio.interceptors.add(
-    LogInterceptor(
-      request: true,
-      requestHeader: true,
-      requestBody: true,
-      responseHeader: true,
-      responseBody: true,
-      error: true,
-    ),
-  );
-}
+          print("REQUEST URL: ${options.uri}");
+          print("TOKEN IN MEMORY: $_token");
+
+          if (_token != null && _token!.isNotEmpty) {
+            options.headers['Authorization'] = 'Bearer $_token';
+          }
+
+          print("HEADERS: ${options.headers}");
+
+          handler.next(options);
+        },
+        onError: (e, handler) {
+
+          print('DIO ERROR: ${e.error}');
+          
+          handler.next(e);
+        },
+      ),
+    );
+
+    dio.interceptors.add(
+      LogInterceptor(
+        request: true,
+        requestHeader: true,
+        requestBody: true,
+        responseHeader: true,
+        responseBody: true,
+        error: true,
+      ),
+    );
+  }
 }

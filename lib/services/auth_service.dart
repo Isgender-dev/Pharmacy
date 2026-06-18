@@ -21,4 +21,21 @@ class AuthService {
 
     return response;
   }
+
+Future<void> logout() async {
+  try {
+    final response = await ApiService.dio.post('/auth/logout');
+
+    print("LOGOUT RESPONSE: ${response.data}");
+
+  } on DioException catch (e) {
+
+    print("LOGOUT ERROR: ${e.response?.data}");
+    print("STATUS: ${e.response?.statusCode}");
+    
+  } finally {
+    await TokenStorage.clear();
+    ApiService.setToken(null);
+  }
+}
 }

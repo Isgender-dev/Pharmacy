@@ -13,7 +13,7 @@ class PharmacyMedicines {
     required this.Description,
     required this.Price,
     required this.NewPrice,
-    required this.CategoryId, 
+    required this.CategoryId,
     required this.PharmacyId,
   });
   factory PharmacyMedicines.fromJson(Map<String, dynamic> json) {
@@ -23,7 +23,7 @@ class PharmacyMedicines {
       Description: json['description'],
       Price: json['price'],
       NewPrice: json['newprice'],
-      CategoryId: json['categoryid'], 
+      CategoryId: json['categoryid'],
       PharmacyId: json['pharmacyid'],
     );
   }

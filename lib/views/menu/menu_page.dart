@@ -90,9 +90,10 @@ class _categoriesTabState extends State<_categoriesTab> {
         categories = response.data['data'] ?? [];
         isLoading = false;
       });
-    } catch (e, stackTrace) {
+    } catch (e, st) {
+      print('TYPE: ${e.runtimeType}');
+      print('StackTrace: $st');
       print('ERROR: $e');
-      print('StackTrace: $stackTrace');
       
       setState(() => isLoading = false);
     }

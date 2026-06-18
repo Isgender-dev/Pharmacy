@@ -11,6 +11,8 @@ Widget defaultHome = MainScreen();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  ApiService.init();
+  
   final token = await TokenStorage.getToken();
   if (token != null) {
     ApiService.setToken(token);
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-    //  designSize: const Size(375, 825),
+      //  designSize: const Size(375, 825),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
@@ -41,14 +43,14 @@ class MyApp extends StatelessWidget {
 
   ThemeData _buildTheme() {
     return ThemeData(
-          textSelectionTheme: TextSelectionThemeData(
-            selectionHandleColor: kPrimary,
-            selectionColor: kPrimaryLight,
-            cursorColor: kPrimary
-          ),
-          scaffoldBackgroundColor: kOffWhite,
-          iconTheme: const IconThemeData(color: kDark),
-          primarySwatch: Colors.grey,
-        );
+      textSelectionTheme: TextSelectionThemeData(
+        selectionHandleColor: kPrimary,
+        selectionColor: kPrimaryLight,
+        cursorColor: kPrimary,
+      ),
+      scaffoldBackgroundColor: kWhite,
+      iconTheme: const IconThemeData(color: kDark),
+      primarySwatch: Colors.grey,
+    );
   }
 }
