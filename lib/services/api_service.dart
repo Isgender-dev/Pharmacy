@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-// import 'package:pharmacy/core/token_storage.dart';
 
 class ApiService {
   static final Dio dio = Dio(

@@ -32,7 +32,7 @@ class _CartPageState extends State<CartPage> {
   Widget _header(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: kGrayLight)),
+        border: Border(bottom: BorderSide(color: kGreyLight)),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Row(
@@ -46,7 +46,7 @@ class _CartPageState extends State<CartPage> {
             ],
           ),
           IconButton(
-            icon: const Icon(Icons.close, color: kGray),
+            icon: const Icon(Icons.close, color: kGrey),
             onPressed: () => Navigator.of(context).pop(),
           ),
         ],

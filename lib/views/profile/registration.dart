@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pharmacy/constants/constants.dart';
 import 'package:pharmacy/views/profile/widgets/registration_button.dart';
 import 'package:pharmacy/views/profile/widgets/registration_form_fields.dart';
-import 'package:pharmacy/views/profile/widgets/social_login.dart';
+import 'package:pharmacy/views/profile/widgets/registration_header.dart';
 
 class Registration extends StatefulWidget {
   const Registration({super.key});
@@ -12,6 +12,7 @@ class Registration extends StatefulWidget {
 }
 
 class _RegistrationState extends State<Registration> {
+  final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -25,8 +26,7 @@ class _RegistrationState extends State<Registration> {
 
   @override
   Widget build(BuildContext context) {
-    return  
-    Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: Text('Profil'),
         backgroundColor: const Color.fromRGBO(209, 250, 229, 1),
@@ -34,25 +34,29 @@ class _RegistrationState extends State<Registration> {
         centerTitle: true,
       ),
       body: ListView(
-        children: [Column(
-          children: [
-            Registration(),
-            RegistrationFormFields(
-              isPasswordVisible: isPasswordVisible,
-              emailController: emailController,
-              passwordController: passwordController,
-              onTogglePassword: () {
-                setState(() => isPasswordVisible = !isPasswordVisible);
-              },
-            ),
-            RegistrationButton(
-              emailController: emailController,
-              passwordController: passwordController,
-            ),
-            SocialLoginSection(),
-          ],
-        ),
-      ]),
+        children: [
+          Column(
+            children: [
+              RegistrationHeader(),
+              RegistrationFormFields(
+                isPasswordVisible: isPasswordVisible,
+                nameController: nameController,
+                emailController: emailController,
+                passwordController: passwordController,
+                onTogglePassword: () {
+                  setState(() => isPasswordVisible = !isPasswordVisible);
+                },
+              ),
+              RegistrationButton(
+                nameController: nameController,
+                emailController: emailController,
+                passwordController: passwordController,
+              ),
+              // SocialLoginSection(),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

@@ -14,7 +14,7 @@ class Label extends StatelessWidget {
         style: TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w500,
-          color: kGray,
+          color: kGrey,
           letterSpacing: 1.2,
         ),
       ),

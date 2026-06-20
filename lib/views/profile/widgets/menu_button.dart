@@ -16,9 +16,9 @@ class MenuButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
-        iconColor: kGray,
-        foregroundColor: kGray,
-        side: BorderSide(color: kGray),
+        iconColor: kGrey,
+        foregroundColor: kGrey,
+        side: BorderSide(color: kGrey),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
       ),
       onPressed: onTap,

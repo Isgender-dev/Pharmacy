@@ -16,7 +16,7 @@ class MenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(icon, color: kGray),
+      leading: Icon(icon, color: kGrey),
       title: Text(title),
       onTap: onTap,
     );

@@ -1,6 +1,6 @@
-
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:pharmacy/constants/constants.dart';
+import 'package:pharmacy/views/profile/profile.dart';
 import 'package:pharmacy/views/profile/widgets/footer_section.dart';
 
 class RegistrationHeader extends StatelessWidget {
@@ -24,7 +24,19 @@ class RegistrationHeader extends StatelessWidget {
               letterSpacing: -0.5,
             ),
           ),
-          FooterSection(text: "Hasabyňyz barmy?", textButton: "Giriň",mainAxisAlignment: MainAxisAlignment.start,),
+          FooterSection(
+            text: 'Hasabyňyz barmy?',
+            textButton: 'Giriň',
+            mainAxisAlignment: MainAxisAlignment.start,
+            onTap: () {
+              Navigator.pop(context);
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => Profile())
+                );
+            },
+          ),
           const SizedBox(height: 20),
         ],
       ),

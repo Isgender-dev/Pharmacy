@@ -1,6 +1,6 @@
-
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:pharmacy/constants/constants.dart';
+import 'package:pharmacy/views/profile/registration.dart';
 import 'package:pharmacy/views/profile/widgets/footer_section.dart';
 
 class LoginHeader extends StatelessWidget {
@@ -24,7 +24,19 @@ class LoginHeader extends StatelessWidget {
               letterSpacing: -0.5,
             ),
           ),
-          FooterSection(text: "Hasabyňyz ýokmy?", textButton: "Agza boluň",mainAxisAlignment: MainAxisAlignment.start,),
+          FooterSection(
+            text: "Hasabyňyz ýokmy?",
+            textButton: "Agza boluň",
+            mainAxisAlignment: MainAxisAlignment.start,
+            onTap: () {
+              Navigator.pop(context);
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => Registration()),
+              );
+            },
+          ),
           const SizedBox(height: 20),
         ],
       ),

@@ -4,13 +4,16 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:pharmacy/constants/constants.dart';
 import 'package:pharmacy/services/auth_service.dart';
 import 'package:pharmacy/views/entrypoint.dart';
+import 'package:pharmacy/views/profile/profile.dart';
 
 class RegistrationButton extends StatelessWidget {
+  final TextEditingController nameController;
   final TextEditingController emailController;
   final TextEditingController passwordController;
 
   const RegistrationButton({
     super.key,
+    required this.nameController,
     required this.emailController,
     required this.passwordController,
   });
@@ -34,7 +37,8 @@ class RegistrationButton extends StatelessWidget {
           ),
           onPressed: () async {
             try {
-              await AuthService().login(
+              await AuthService().registration(
+                name: nameController.text,
                 email: emailController.text.trim(),
                 password: passwordController.text,
               );

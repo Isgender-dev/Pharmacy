@@ -1,21 +1,29 @@
 import 'package:flutter/widgets.dart';
 import 'package:pharmacy/constants/constants.dart';
+
 class FooterSection extends StatelessWidget {
-  const FooterSection({super.key, required this.mainAxisAlignment, required this.text, required this.textButton});
+  FooterSection({
+    super.key,
+    required this.mainAxisAlignment,
+    required this.text,
+    required this.textButton,
+    required this.onTap,
+  });
   final MainAxisAlignment mainAxisAlignment;
   final String text;
   final String textButton;
+  VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: mainAxisAlignment,
       children: [
-        Text(text, style: TextStyle(color: kGray)),
+        Text(text, style: TextStyle(color: kGrey)),
         Padding(
           padding: const EdgeInsets.only(left: 5.0),
           child: GestureDetector(
-            onTap: () {},
+            onTap: onTap,
             // onDoubleTap: () {
             //   print('click 2');
             // },

@@ -14,13 +14,10 @@ class AuthService {
 
     print("LOGIN RESPONSE: ${response.data}");
 
-    final oldToken = await TokenStorage.getToken();
+    final token = response.data['data']['token'];
 
-    if (oldToken == null) {
-      throw Exception("Hasabyňyz tapylmady!");
-    }
-
-    ApiService.setToken(oldToken);
+    await TokenStorage.saveToken(token);
+    ApiService.setToken(token);
 
     return response;
   }
@@ -40,16 +37,14 @@ class AuthService {
   }
 
   Future<Response> registration({
-    required String firstname,
-    required String lastname,
+    required String name,
     required String email,
     required String password,
   }) async {
     final response = await ApiService.dio.post(
-      '/registration',
+      '/auth/register',
       data: {
-        'firstname': firstname,
-        'lastname': lastname,
+        'name': name,
         'email': email,
         'password': password,
       },

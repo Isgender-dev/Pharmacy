@@ -1,4 +1,4 @@
-class Pharmacies {
+class Pharmacy {
   final int ID;
   final String Name;
   final String Address;
@@ -7,7 +7,7 @@ class Pharmacies {
   final double Longitude;
   final int AdminUserId;
 
-  Pharmacies({
+  Pharmacy({
     required this.ID,
     required this.Name,
     required this.Address,
@@ -16,8 +16,8 @@ class Pharmacies {
     required this.Longitude, 
     required this.AdminUserId,
   });
-  factory Pharmacies.fromJson(Map<String, dynamic> json) {
-    return Pharmacies(
+  factory Pharmacy.fromJson(Map<String, dynamic> json) {
+    return Pharmacy(
       ID: json['id'],
       Name: json['name'],
       Address: json['address'],

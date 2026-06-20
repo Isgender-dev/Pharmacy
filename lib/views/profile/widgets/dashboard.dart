@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:pharmacy/constants/constants.dart';
 
@@ -23,7 +22,7 @@ class DashboardCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: kWhite,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: kGrayShade),
+        border: Border.all(color: kGreyShade),
       ),
       child: Row(
         children: [

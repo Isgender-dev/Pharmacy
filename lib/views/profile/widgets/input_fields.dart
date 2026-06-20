@@ -15,7 +15,7 @@ class InputField extends StatefulWidget {
     required this.icon,
     required this.hint,
     this.isPassword = false,
-    this.suffix, 
+    this.suffix,
     this.isPasswordVisible = false,
   });
 
@@ -42,7 +42,7 @@ class _InputFieldState extends State<InputField> {
           style: TextStyle(color: kDark),
           decoration: InputDecoration(
             hintText: widget.hint,
-            hintStyle: TextStyle(color: kGrayLight, fontSize: 15),
+            hintStyle: TextStyle(color: kGreyLight, fontSize: 15),
             prefixIcon: Icon(widget.icon, color: kPrimary, size: 22),
             suffixIcon: widget.suffix,
             border: InputBorder.none,

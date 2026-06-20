@@ -112,8 +112,8 @@ Container _buildSearchBar() {
       child: TextField(
         decoration: InputDecoration(
           hintText: 'Gözleg',
-          hintStyle: TextStyle(color: kGray),
-          suffixIcon: Icon(AntDesign.search1, color: kGray),
+          hintStyle: TextStyle(color: kGrey),
+          suffixIcon: Icon(AntDesign.search1, color: kGrey),
           border: InputBorder.none,
           contentPadding: EdgeInsets.symmetric(vertical: 10),
         ),

@@ -1,15 +1,15 @@
 import 'package:dio/dio.dart';
 import 'api_service.dart';
 
-class CategoryService {
-  Future<Response> getCategories({int limit = 20, int offset = 0}) async {
+class PharmacyService {
+  Future<Response> getPharmacies({int limit = 20,int offset = 0}) async {
     try {
       final response = await ApiService.dio.get(
-        '/admin/categories',
+        '/admin/pharmacies',
         queryParameters: {'limit': limit, 'offset': offset},
 
       );
-      
+
       print('RAW RESPONSE:');
       print(response.data);
 

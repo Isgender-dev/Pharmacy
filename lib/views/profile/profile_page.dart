@@ -5,7 +5,7 @@ import 'package:pharmacy/core/token_storage.dart';
 import 'package:pharmacy/models/user.dart';
 import 'package:pharmacy/services/auth_service.dart';
 import 'package:pharmacy/services/user_service.dart';
-import 'package:pharmacy/views/profile/profile.dart';
+import 'package:pharmacy/views/profile/registration.dart';
 import 'package:pharmacy/views/profile/widgets/dashboard.dart';
 import 'package:pharmacy/views/profile/widgets/menu_button.dart';
 
@@ -29,7 +29,7 @@ class _ProfilePageState extends State<ProfilePage> {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (_) => const Profile()),
+          MaterialPageRoute(builder: (_) => const Registration()),
         );
       });
     }
@@ -60,7 +60,7 @@ class _ProfilePageState extends State<ProfilePage> {
           Container(
             margin: EdgeInsets.all(12),
             decoration: BoxDecoration(
-              border: Border.all(color: kGrayShade),
+              border: Border.all(color: kGreyShade),
               borderRadius: BorderRadius.circular(16),
             ),
             child: Theme(
@@ -71,27 +71,25 @@ class _ProfilePageState extends State<ProfilePage> {
                 padding: const EdgeInsets.all(10.0),
                 child: ExpansionTile(
                   title: Text(
-                    user == null
-                        ? "Ýüklenýär..."
-                        : '${user!.FirstName} ${user!.LastName}',
+                    user == null ? "Ýüklenýär..." : '${user!.Name}',
                     style: TextStyle(fontWeight: FontWeight.w500),
                   ),
                   subtitle: Text(
                     user?.Email ?? "",
-                    style: TextStyle(color: kGrayLight),
+                    style: TextStyle(color: kGreyLight),
                   ),
                   leading: CircleAvatar(
                     radius: 22,
-                    backgroundColor: kGrayShade,
+                    backgroundColor: kGreyShade,
                     child: user == null
                         ? null
                         : Text(
-                            user!.FirstName[0].toUpperCase(),
+                            user!.Name[0].toUpperCase(),
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                   ),
-                  iconColor: kGray,
-                  collapsedIconColor: kGray,
+                  iconColor: kGrey,
+                  collapsedIconColor: kGrey,
                   children: [
                     MenuButton(
                       icon: Icons.dashboard_outlined,
@@ -136,7 +134,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
                         Navigator.pushAndRemoveUntil(
                           context,
-                          MaterialPageRoute(builder: (_) => const Profile()),
+                          MaterialPageRoute(
+                            builder: (_) => const Registration(),
+                          ),
                           (route) => false,
                         );
                       },
@@ -187,4 +187,3 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
-

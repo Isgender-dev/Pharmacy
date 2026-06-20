@@ -3,7 +3,7 @@ import 'package:pharmacy/constants/constants.dart';
 import 'package:pharmacy/core/token_storage.dart';
 import 'package:pharmacy/services/pharmacy_medicine_service.dart';
 import 'package:pharmacy/views/check_login.dart';
-import 'package:pharmacy/views/menu/menu_item.dart';
+import 'package:pharmacy/views/home/medicine_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<dynamic> PharmacyMedicines = [];
+  List<dynamic> Medicines = [];
   bool isLoading = true;
 
   @override
@@ -22,11 +22,11 @@ class _HomePageState extends State<HomePage> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await checkLogin(context);
-      await loadPharmacyMedicines();
+      await loadMedicines();
     });
   }
 
-  Future<void> loadPharmacyMedicines() async {
+  Future<void> loadMedicines() async {
     print("TOKEN: ${TokenStorage.token}");
 
     if (TokenStorage.token == null || TokenStorage.token!.isEmpty) {
@@ -35,12 +35,12 @@ class _HomePageState extends State<HomePage> {
     }
 
     try {
-      final response = await PharmacyMedicineService().getPharmacyMedicines();
+      final response = await PharmacyMedicineService().getMedicines();
 
       print("RESPONSE: ${response.data}");
 
       setState(() {
-        PharmacyMedicines = response.data['data'] ?? [];
+        Medicines = response.data['data'] ?? [];
         isLoading = false;
       });
     } catch (e, st) {
@@ -58,18 +58,19 @@ class _HomePageState extends State<HomePage> {
       return const Center(child: CircularProgressIndicator(color: kPrimary));
     }
 
-    if (PharmacyMedicines.isEmpty) {
+    if (Medicines.isEmpty) {
       return const Center(child: Text("Dermanlar entek ýok"));
     }
 
     return ListView.builder(
-      itemCount: PharmacyMedicines.length,
+      itemCount: Medicines.length,
       itemBuilder: (context, index) {
-        final pharmacyMedicine = PharmacyMedicines[index];
+        final pharmacyMedicine = Medicines[index];
 
-        return MenuItem(
-          icon: Icons.medication_outlined,
+        return MedicineCard(
           title: pharmacyMedicine['name'] ?? '',
+          price: pharmacyMedicine['price'] as int,
+          newprice: pharmacyMedicine['new_price'] as int?,
           onTap: () {},
         );
       },

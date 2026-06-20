@@ -1,8 +1,5 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:pharmacy/constants/constants.dart';
-import 'package:pharmacy/views/profile/widgets/footer_section.dart';
 
 class SocialLoginSection extends StatelessWidget {
   const SocialLoginSection({super.key});
@@ -16,17 +13,17 @@ class SocialLoginSection extends StatelessWidget {
           const SizedBox(height: 30.0),
           Row(
             children: [
-              Expanded(child: Divider(color: kGrayShade, thickness: 1)),
+              Expanded(child: Divider(color: kGreyShade, thickness: 1)),
 
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
                   "Ýa-da şunuň bilen dowam ediň",
-                  style: TextStyle(color: kGray, fontSize: 14),
+                  style: TextStyle(color: kGrey, fontSize: 14),
                 ),
               ),
 
-              Expanded(child: Divider(color: kGrayShade, thickness: 1)),
+              Expanded(child: Divider(color: kGreyShade, thickness: 1)),
             ],
           ),
 
@@ -36,8 +33,8 @@ class SocialLoginSection extends StatelessWidget {
             text: "Google arkaly giriş",
             imageUrl: "https://cdn-icons-png.flaticon.com/512/300/300221.png",
             backgroundColor: kWhite,
-            textColor: kGray,
-            borderColor: kGrayShade,
+            textColor: kGrey,
+            borderColor: kGreyShade,
           ),
 
           const SizedBox(height: 14),
@@ -61,7 +58,6 @@ class SocialLoginSection extends StatelessWidget {
           ),
 
           SizedBox(height: 14),
-          FooterSection(text: "Hasabyňyz ýokmy?", textButton: "Agza boluň",mainAxisAlignment: MainAxisAlignment.start,),
         ],
       ),
     );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pharmacy/constants/constants.dart';
 import 'package:pharmacy/core/token_storage.dart';
-import 'package:pharmacy/views/profile/profile.dart';
+import 'package:pharmacy/views/profile/registration.dart';
 
 Future<void> checkLogin(BuildContext context) async {
   final token = TokenStorage.token;
@@ -29,7 +29,7 @@ Future<void> checkLogin(BuildContext context) async {
 
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => const Profile()),
+                  MaterialPageRoute(builder: (_) => const Registration()),
                 );
               },
               child: const Text('Giriş', style: TextStyle(color: kPrimary),),

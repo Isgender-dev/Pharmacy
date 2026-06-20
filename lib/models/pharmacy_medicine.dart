@@ -1,4 +1,4 @@
-class PharmacyMedicines {
+class PharmacyMedicine {
   final int ID;
   final String Name;
   final String Description;
@@ -6,8 +6,9 @@ class PharmacyMedicines {
   final double? NewPrice;
   final int CategoryId;
   final int PharmacyId;
+  final int Stock;
 
-  PharmacyMedicines({
+  PharmacyMedicine({
     required this.ID,
     required this.Name,
     required this.Description,
@@ -15,16 +16,18 @@ class PharmacyMedicines {
     required this.NewPrice,
     required this.CategoryId,
     required this.PharmacyId,
+    required this.Stock,
   });
-  factory PharmacyMedicines.fromJson(Map<String, dynamic> json) {
-    return PharmacyMedicines(
+  factory PharmacyMedicine.fromJson(Map<String, dynamic> json) {
+    return PharmacyMedicine(
       ID: json['id'],
       Name: json['name'],
       Description: json['description'],
       Price: json['price'],
-      NewPrice: json['newprice'],
-      CategoryId: json['categoryid'],
-      PharmacyId: json['pharmacyid'],
+      NewPrice: json['new_price'],
+      CategoryId: json['category_id'],
+      PharmacyId: json['pharmacy_id'],
+      Stock: json['stock'],
     );
   }
 }

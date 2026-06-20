@@ -3,7 +3,6 @@ import 'package:pharmacy/constants/constants.dart';
 import 'package:pharmacy/views/profile/widgets/login_button.dart';
 import 'package:pharmacy/views/profile/widgets/login_form_fields.dart';
 import 'package:pharmacy/views/profile/widgets/login_header.dart';
-import 'package:pharmacy/views/profile/widgets/social_login.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -26,8 +25,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    return  
-    Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: Text('Profil'),
         backgroundColor: const Color.fromRGBO(209, 250, 229, 1),
@@ -35,25 +33,27 @@ class _ProfileState extends State<Profile> {
         centerTitle: true,
       ),
       body: ListView(
-        children: [Column(
-          children: [
-            LoginHeader(),
-            LoginFormFields(
-              isPasswordVisible: isPasswordVisible,
-              emailController: emailController,
-              passwordController: passwordController,
-              onTogglePassword: () {
-                setState(() => isPasswordVisible = !isPasswordVisible);
-              },
-            ),
-            LoginButton(
-              emailController: emailController,
-              passwordController: passwordController,
-            ),
-            SocialLoginSection(),
-          ],
-        ),
-      ]),
+        children: [
+          Column(
+            children: [
+              LoginHeader(),
+              LoginFormFields(
+                isPasswordVisible: isPasswordVisible,
+                emailController: emailController,
+                passwordController: passwordController,
+                onTogglePassword: () {
+                  setState(() => isPasswordVisible = !isPasswordVisible);
+                },
+              ),
+              LoginButton(
+                emailController: emailController,
+                passwordController: passwordController,
+              ),
+              // SocialLoginSection(),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

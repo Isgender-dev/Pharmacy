@@ -1,17 +1,17 @@
-class Orders {
+class Order {
   final int ID;
   final String Name;
   final double Price;
   final String Description;
 
-  Orders({
+  Order({
     required this.ID,
     required this.Name,
     required this.Price,
     required this.Description,
   });
-  factory Orders.fromJson(Map<String, dynamic> json) {
-    return Orders(
+  factory Order.fromJson(Map<String, dynamic> json) {
+    return Order(
       ID: json['id'],
       Name: json['name'],
       Price: json['price'],
