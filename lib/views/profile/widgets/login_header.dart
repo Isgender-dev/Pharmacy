@@ -27,7 +27,6 @@ class LoginHeader extends StatelessWidget {
           FooterSection(
             text: "Hasabyňyz ýokmy?",
             textButton: "Agza boluň",
-            mainAxisAlignment: MainAxisAlignment.start,
             onTap: () {
               Navigator.pop(context);
 

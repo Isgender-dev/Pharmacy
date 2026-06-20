@@ -4,7 +4,6 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:pharmacy/constants/constants.dart';
 import 'package:pharmacy/services/auth_service.dart';
 import 'package:pharmacy/views/entrypoint.dart';
-import 'package:pharmacy/views/profile/profile.dart';
 
 class RegistrationButton extends StatelessWidget {
   final TextEditingController nameController;

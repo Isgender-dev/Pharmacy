@@ -27,7 +27,6 @@ class RegistrationHeader extends StatelessWidget {
           FooterSection(
             text: 'Hasabyňyz barmy?',
             textButton: 'Giriň',
-            mainAxisAlignment: MainAxisAlignment.start,
             onTap: () {
               Navigator.pop(context);
 
