@@ -35,32 +35,33 @@ class MedicineCard extends StatelessWidget {
                   height: 200,
                   width: double.infinity,
                   decoration: BoxDecoration(
+                    color: kGreyShade,
                     borderRadius: const BorderRadius.vertical(
                       top: Radius.circular(20),
                     ),
                   ),
                   child: Icon(Icons.error),
                 ),
-      
+
                 Positioned(
                   bottom: 12,
                   right: 12,
                   child: Container(
                     padding: const EdgeInsets.all(10),
                     decoration: const BoxDecoration(
-                      color: Colors.green,
+                      color: kGreen,
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(
                       Icons.add_shopping_cart_outlined,
-                      color: Colors.white,
+                      color: kWhite,
                       size: 18,
                     ),
                   ),
                 ),
               ],
             ),
-      
+
             Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
@@ -74,26 +75,31 @@ class MedicineCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 18),
-      
+
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     textBaseline: TextBaseline.alphabetic,
                     children: [
                       Text(
-                        '${newprice!.toString()}',
+                        '${newprice!.toString()}'
+                        ' '
+                        'TMT',
                         style: const TextStyle(
                           fontSize: 22,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w600,
                           color: kDark,
                         ),
                       ),
                       if (price.toString() != '') ...[
                         const SizedBox(width: 8),
                         Text(
-                          '${price.toString()}',
+                          '${price.toString()}'
+                          ' '
+                          'TMT',
                           style: TextStyle(
                             fontSize: 16,
                             color: kGrey,
+                            decoration: TextDecoration.lineThrough,
                           ),
                         ),
                       ],

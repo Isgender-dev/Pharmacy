@@ -48,10 +48,7 @@ class RegistrationButton extends StatelessWidget {
             } catch (e) {
               if (!context.mounted) return;
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(e.toString()),
-                  backgroundColor: Colors.red,
-                ),
+                SnackBar(content: Text(e.toString()), backgroundColor: kRed),
               );
             }
           },

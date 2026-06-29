@@ -47,7 +47,7 @@ class LoginButton extends StatelessWidget {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(e.toString()),
-                  backgroundColor: Colors.red,
+                  backgroundColor: kRed,
                 ),
               );
             }

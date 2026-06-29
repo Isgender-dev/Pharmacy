@@ -64,9 +64,7 @@ class _ProfilePageState extends State<ProfilePage> {
               borderRadius: BorderRadius.circular(16),
             ),
             child: Theme(
-              data: Theme.of(
-                context,
-              ).copyWith(dividerColor: Colors.transparent),
+              data: Theme.of(context).copyWith(dividerColor: kTransparent),
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: ExpansionTile(
@@ -90,25 +88,11 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   iconColor: kGrey,
                   collapsedIconColor: kGrey,
+
                   children: [
-                    MenuButton(
-                      icon: Icons.dashboard_outlined,
-                      title: "Dolandyryş paneli",
-                      onTap: () {},
-                    ),
                     MenuButton(
                       icon: Icons.receipt_long_outlined,
                       title: "Sargytlarym",
-                      onTap: () {},
-                    ),
-                    MenuButton(
-                      icon: Icons.notifications_none,
-                      title: "Bildirişler",
-                      onTap: () {},
-                    ),
-                    MenuButton(
-                      icon: Icons.star_border,
-                      title: "Bahalandyrmalarym",
                       onTap: () {},
                     ),
                     MenuButton(
